@@ -1,0 +1,11 @@
+{
+  "name": "book-trading-api",
+  "version": "1.0.0",
+  "description": "A project made for a freecodecamp.org challenge.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andrei Radu",
+  "license": "ISC"
+}
