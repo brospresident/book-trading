@@ -9,7 +9,7 @@ const usersRouter = require('./routes/users/users.router');
 app.use(express.json()); // parse every json and convert it to a js object
 
 // Routes midllewares
-app.use('/user', usersRouter);
+app.use('/api/users', usersRouter);
 
 app.get('/', (req, res) => {
     return res.status(200).json('Ready to read books?');

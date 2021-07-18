@@ -1,0 +1,17 @@
+.booksContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.booksWrap {
+    width: 50%;
+}
+
+.booksHeader {
+    background-color: rgba(145, 232, 63, 0.4);
+    border: 1px solid rgba(0,0,0,0.3);
+    text-align: center;
+    border-radius: 25px;
+}

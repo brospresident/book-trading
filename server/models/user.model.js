@@ -7,11 +7,11 @@ const DEFAULT_USER_ID = 0;
  * @returns latest user id from database
  */
 async function getLatestUserId() {
-    const foundUser = userMongo.findOne().sort('-id');
+    const foundUser = await userMongo.findOne().sort('-id');
 
     if (!foundUser) return DEFAULT_USER_ID;
 
-    return foundUser.id;
+    return Number(foundUser.id);
 }
 
 /**
@@ -23,7 +23,25 @@ async function getUserById(id) {
         id: id
     });   
 
-    if (!user) throw new Error(`There's no user with that id.`);
+    if (!user) return {
+        error: `There's no user with that id.`
+    };
+
+    return user;
+}
+
+/**
+ * @param username the name of the user you want to find
+ * @returns the user data
+ */
+ async function getUserByUsername(username) {
+    const user = await userMongo.findOne({
+        username: username
+    });   
+
+    if (!user) return {
+        error: `There's no user with that name.`
+    };
 
     return user;
 }
@@ -46,6 +64,6 @@ async function saveUser(user) {
 module.exports = {
     getLatestUserId,
     getUserById,
+    getUserByUsername,
     saveUser
-
 }

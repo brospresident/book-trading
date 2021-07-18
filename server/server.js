@@ -1,10 +1,18 @@
 const http = require('http');
 
 const app = require('./app');
-const PORT = 3000;
+const { mongoConnect } = require('./services/mongo');
+const PORT = 3001;
 
 const server = http.createServer(app);
 
-server.listen(PORT, () => {
-    console.log(`Book trading API listening to port ${PORT}`);
-});
+
+async function startServer() {
+    await mongoConnect();
+    server.listen(PORT, () => {
+        console.log(`Book trading API listening to port ${PORT}`);
+    });
+}
+
+startServer();
+
