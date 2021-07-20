@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 
 import './App.css';
@@ -14,31 +13,44 @@ import Header from './components/Header/Header'
 import Books from './components/Books/Books';
 
 const initialUser = {
-  name: '',
-  books: [],
+  id: null,
+  username: '',
   city: '',
   state: '',
+  books: [],
   isLoggedIn: false
 }
 
 function App() {
   const [ user, setUserInfo ] = useState(initialUser);
+
+  const setUser = (data) => {
+    if (!data) setUserInfo(initialUser);
+    setUserInfo(data);
+  }
+
+  useEffect(() => {
+    const alreadyLoggedIn = localStorage.getItem('user');
+
+    if (alreadyLoggedIn) {
+      setUserInfo(alreadyLoggedIn);
+    }
+  }, [])
+
   return (
     <div className="App">
-      <Header isLoggedIn={user.isLoggedIn}/>
-      <Router>
-        <Switch>
-          <Route exact path = '/'>
-            <Redirect to = '/books'/>
-          </Route>
-          <Route exact path = '/books'>
-            <Books user={user}/>
-          </Route>
-          <Route exact path = '/auth'>
-            <Auth user={user}/>
-          </Route>
-        </Switch>
-      </Router>
+        <Header user={user} setUser={setUser}/> {/* sa adaug log out button undeva in header */}
+          <Switch>
+            <Route exact path = '/'>
+              <Redirect to = '/books'/>
+            </Route>
+            <Route exact path = '/books'>
+              <Books user={user} setUser={setUser}/>
+            </Route>
+            <Route exact path = '/auth'>
+              <Auth user={user} setUser={setUser}/>
+            </Route>
+          </Switch>
     </div>
   );
 }

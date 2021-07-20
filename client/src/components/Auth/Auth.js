@@ -4,11 +4,16 @@ import React, { useState } from 'react';
 import {
     loginUser,
     registerUser
-} from '../../requests'
+} from '../../requests';
 
+import {
+    Redirect,
+} from 'react-router-dom';
+import history from '../../history';
 
 // styles
 import styles from './Auth.module.css';
+
 
 function Login(props) {
     const { passChange, userChange, submit } = props;
@@ -55,16 +60,52 @@ function Auth(props) {
 
     const submitAuth = async () => {
         const dataObj = {
-            userName,
+            username: userName,
             password,
             email
         }
 
         if (page === 'login') {
             const response = await loginUser(dataObj);
+            if (!response.error) {
+                response.isLoggedIn = true;
+                const userData = {
+                    id: response.id,
+                    username: response.username,
+                    city: response.city,
+                    state: response.state,
+                    books: response.books, // trebuie facut request pe server sa trimita inapoi cartile pentru fiecare user la login
+                    isLoggedIn: true
+                }
+                history.push('/auth', response);
+                localStorage.setItem('user', userData);
+                props.setUser(response);
+                return <Redirect to = '/books'/>
+            }
+            else {
+                // bag error boundry
+            }
         }
         else if (page === 'register') {
             const response = await registerUser(dataObj);
+            if (!response.error) {
+                response.isLoggedIn = true;
+                const userData = {
+                    id: response.id,
+                    username: response.username,
+                    city: response.city,
+                    state: response.state,
+                    books: response.books, // trebuie facut request pe server sa trimita inapoi cartile pentru fiecare user la login
+                    isLoggedIn: true
+                }
+                history.push('/auth', userData);
+                props.setUser(userData);
+                localStorage.setItem('user', userData);
+                return <Redirect to = '/books'/> // trebuie fixat redirectu
+            }
+            else {
+                // bag error boundry
+            }
         }
     }
 

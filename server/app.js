@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const app = express();
 
@@ -7,6 +8,9 @@ const usersRouter = require('./routes/users/users.router');
 
 //midllewares
 app.use(express.json()); // parse every json and convert it to a js object
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
 
 // Routes midllewares
 app.use('/api/users', usersRouter);

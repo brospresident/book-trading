@@ -1,17 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 // other components
 
 import styles from './Books.module.css';
 
-function Books(props) {
-    const [ books, setBooks ] = useState([]);
-    const [ user, setUser ] = useState({});
-
-    useEffect(() => {
-        setUser(props.user);
-    }, [props.user]);
-
+function Books() {
     return (
         <div>
             <div className={styles.booksContainer}>

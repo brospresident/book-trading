@@ -1,13 +1,42 @@
 const {
     getLatestUserId,
     getUserByUsername,
-    saveUser
+    saveUser,
+    getUserById
 } = require('../../models/user.model');
 
+/**
+ * 
+ * @param {*} req request parameter
+ * @param {*} res response object
+ * @returns an array with all users from the database
+ */
 function httpGetAllUsers(req, res) {
     
 }
 
+async function httpGetUserById(req, res) {
+    const { id } = +req.params;
+
+    if (id) {
+        const userData = await getUserById(id);
+        if (!userData) res.status(404).json({
+            error: 'No user with that id'
+        });
+
+        return res.status(302).json(userData);
+    }
+    else return res.status(400).json({
+        error: 'Bad request'
+    })
+}
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns the user information
+ */
 async function httpLoginUser(req, res) {
     const user = req.body;
     const dbUser = await getUserByUsername(user.username);
@@ -22,6 +51,9 @@ async function httpLoginUser(req, res) {
     });
 }
 
+/**
+ * @returns the user information
+ */
 async function httpRegisterUser(req, res) {
     const user = req.body;
 
@@ -31,7 +63,7 @@ async function httpRegisterUser(req, res) {
         if (user.password && user.email) {
             const id = await getLatestUserId();
             const newUser = {
-                id: id,
+                id: id + 1,
                 username: user.username,
                 password: user.password,
                 email: user.email,
@@ -52,6 +84,7 @@ async function httpRegisterUser(req, res) {
 
 module.exports = {
     httpGetAllUsers,
+    httpGetUserById,
     httpLoginUser,
     httpRegisterUser
 }

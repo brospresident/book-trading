@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const MONGO_URL = "";
+const MONGO_URL = "mongodb+srv://book-trading:booktrading@cluster0.vsdwc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 mongoose.connection.once('open', () => {
     console.log('MongoDB connected');
