@@ -16,9 +16,11 @@ function httpGetAllUsers(req, res) {
 }
 
 async function httpGetUserById(req, res) {
-    const { id } = +req.params;
+    let { id } = req.params;
 
-    if (id) {
+    id = +id;
+
+    if (id >= 0) {
         const userData = await getUserById(id);
         if (!userData) res.status(404).json({
             error: 'No user with that id'

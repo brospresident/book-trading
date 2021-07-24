@@ -38,9 +38,26 @@ async function registerUser(user) {
     return await resp.json();
 }
 
+/**
+ * 
+ * @param userId the id of user we want to get the books
+ * @returns user's books
+ */
+async function getUserBooks(userId) {
+    const resp = await fetch(`${API_URL}/books/${userId}`);
+    return await resp.json();
+}
+
+async function getAllUsers() {
+    const resp = await fetch(`${API_URL}/users`);
+    return await resp.json();
+}
+
 export {
     getAllTradeableBooks,
     getUserById,
     loginUser,
-    registerUser
+    registerUser,
+    getUserBooks,
+    getAllUsers
 }

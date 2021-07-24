@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getAllTradeableBooks } from '../../requests';
+import { useParams } from 'react-router-dom';
+import { getAllTradeableBooks, getUserBooks } from '../../requests';
 
 // other components
 import Book from '../Book/Book';
@@ -9,11 +10,15 @@ import styles from './Books.module.css';
 function Books() {
     const [ books, setBooks ] = useState([]);
 
+    let { userId } = useParams();
+
     const getBooksData = async () => {
-        const data = await getAllTradeableBooks();
+        let data;
+        if (userId === undefined) data = await getAllTradeableBooks();
+        else data = await getUserBooks(userId);
         setBooks(data);
     }
-    const displayBooks = books.map((book, id) =>  <Book data = {book} key = {id}/>)
+    const displayBooks = books.map((book, id) => <Book data = {book} key = {id}/>)
 
     useEffect(() => {
         async function fetchBooks() {

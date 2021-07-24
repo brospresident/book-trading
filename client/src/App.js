@@ -7,7 +7,9 @@ import {
 
 import './App.css';
 import Auth from "./components/Auth/Auth";
-import Header from './components/Header/Header'
+import Header from './components/Header/Header';
+import Profile from './components/Profile/Profile';
+import UsersList from './components/UsersList/UsersList'
 
 // pages
 import Books from './components/Books/Books';
@@ -50,6 +52,9 @@ function App() {
             <Route exact path = '/auth'>
               <Auth user={user} setUser={setUser}/>
             </Route>
+            <Route exact path = '/users/:id' component={Profile}/>
+            <Route exact path = '/users/:userId/books' component={Books}/>
+            <Route exact path = '/users' component = {UsersList} />
           </Switch>
     </div>
   );

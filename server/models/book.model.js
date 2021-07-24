@@ -1,5 +1,7 @@
 const bookMongo = require('./book.mongo');
 
+const { getUserById } = require('./user.model');
+
 const DEFAULT_BOOK_ID = 0;
 
 async function getLatestBookId() {
@@ -11,9 +13,10 @@ async function getLatestBookId() {
     return Number(book.id) + 1;
 }
 
-async function getUserBooksByName(name) {
+async function getUserBooksById(id) {
+    const user = await getUserById(id);
     return await bookMongo.find({
-        owner: name
+        owner: user.username
     });
 }
 
@@ -33,7 +36,7 @@ async function getAllBooks() {
 
 module.exports = {
     getLatestBookId,
-    getUserBooksByName,
+    getUserBooksById,
     saveBook,
     getAllBooks
 }

@@ -1,16 +1,16 @@
-const { getUserBooksByName,
+const { getUserBooksById,
     getLatestBookId,
     saveBook,
     getAllBooks
 } = require('../../models/book.model');
 
 async function httpGetAllUserBooks(req, res) {
-    const name = req.params.name;
-    if (!name) {
+    const id = +req.params.id;
+    if (!id) {
         const data = await getAllBooks();
         return res.status(200).json(data);
     }
-    const data = await getUserBooksByName(name);
+    const data = await getUserBooksById(id);
     return res.status(200).json(data);
 }
 
