@@ -28,7 +28,7 @@ async function httpGetUserById(req, res) {
     }
     else return res.status(400).json({
         error: 'Bad request'
-    })
+    });
 }
 
 /**

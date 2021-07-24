@@ -20,11 +20,6 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true
-    },
-    books: {
-        type: Array,
-        required: true,
-        default: []
     }
 });
 

@@ -58,7 +58,8 @@ function Auth(props) {
         setUserName(e.target.value);
     }
 
-    const submitAuth = async () => {
+    const submitAuth = async (e) => {
+        e.preventDefault();
         const dataObj = {
             username: userName,
             password,
@@ -78,7 +79,7 @@ function Auth(props) {
                     isLoggedIn: true
                 }
                 history.push('/auth', response);
-                localStorage.setItem('user', userData);
+                localStorage.setItem('user', JSON.stringify(userData));
                 props.setUser(response);
                 return <Redirect to = '/books'/>
             }
@@ -100,7 +101,7 @@ function Auth(props) {
                 }
                 history.push('/auth', userData);
                 props.setUser(userData);
-                localStorage.setItem('user', userData);
+                localStorage.setItem('user', JSON.stringify(userData));
                 return <Redirect to = '/books'/> // trebuie fixat redirectu
             }
             else {

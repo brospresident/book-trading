@@ -1,9 +1,12 @@
 const API_URL = 'http://localhost:3001/api'
 
+// A function that gets all the books and shows them on the /books route.
 async function getAllTradeableBooks() {
-    // TODO: a request to get all tradeable books from mongoDB to client
+    const resp = await fetch(`${API_URL}/books`);
+    return await resp.json();
 }
 
+// A function that gets a user by the provided id
 async function getUserById(id) {
     const resp = await fetch(`${API_URL}/users/${id}`)
     return await resp.json();
